@@ -1,0 +1,17 @@
+config:
+  target: 'http://localhost:4000'
+  phases:
+    - duration: 600
+      arrivalRate: 1
+    - duration: 600
+      arrivalRate: 10
+    - duration: 600
+      arrivalRate: 100
+    - duration: 600
+      arrivalRate: 1000
+  processor: "./randomBannerID.js"
+scenarios:
+  - flow:
+    - function: "randomID"
+    - get:
+        url: "/{{id}}"
