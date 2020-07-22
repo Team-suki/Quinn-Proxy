@@ -2,20 +2,38 @@ require('newrelic');
 const express = require('express');
 const path = require('path');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-
+const template = require('../ssr/layout.js');
+const body = require('../ssr/app.js');
+const scripts = require('../ssr/scripts.js');
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+const {bannerService} = require('./loader.js')
 const app = express();
-
 const rewardsServiceRoute =
   'http://ec2-3-133-92-215.us-east-2.compute.amazonaws.com:3005';
 
 const proxyRouter = {
-  '/api/banner': 'http://sdc-lb-679578692.us-west-1.elb.amazonaws.com/',
+  '/api/banner': 'http://localhost:8080',
 };
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});
+
+//this is wrong and I know it.
+//Needs to be compiled into a string, and passed into the
+//const bannerBundle = require('http://localhost:8080/serverbundle.js')
+
+
+//console.log(bannerBundle)
+
+//console.log('String - ', ReactDOMServer.renderToString(bannerService))
+
+app.get('/ssr/:id', (req, res) => {
+  //res.send(`SSR - ${req.params.id}`)
+  res.send(template('Kickstarter', body(), scripts()))
 });
 
 app.use(
