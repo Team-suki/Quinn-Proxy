@@ -4,6 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
+    "start:pm": "pm2 start ecosystem.config.js -i max",
     "start": "DEBUG=server:startup nodemon",
     "build": "gulp minify-css && gulp minify-html"
   },
@@ -11,12 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.4",
     "newrelic": "^6.11.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pm2": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
