@@ -1,7 +1,7 @@
 module.exports = () => `
 <!-- Banner Service -->
 <script
-  src="http://localhost:8080/serverbundle.js"
+  src="http://localhost:8080/clientbundle.js"
   type="text/javascript"
 ></script>
 `;

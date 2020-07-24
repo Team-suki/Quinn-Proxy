@@ -7,7 +7,7 @@ const body = require('../ssr/app.js');
 const scripts = require('../ssr/scripts.js');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-const {bannerService} = require('./loader.js')
+const exportedLoader = require('./loader.js')
 const app = express();
 const rewardsServiceRoute =
   'http://ec2-3-133-92-215.us-east-2.compute.amazonaws.com:3005';
@@ -32,8 +32,14 @@ app.get('/:id', (req, res) => {
 //console.log('String - ', ReactDOMServer.renderToString(bannerService))
 
 app.get('/ssr/:id', (req, res) => {
-  //res.send(`SSR - ${req.params.id}`)
-  res.send(template('Kickstarter', body(), scripts()))
+  var content = ReactDOMServer.renderToString(exportedLoader.bannerService);
+
+
+
+  //What do I call renderTostring on?
+  //An element?
+  //How do I access the element from the bundle?? Can I?
+  res.send(template('Kickstarter', body(content), scripts()))
 });
 
 app.use(
